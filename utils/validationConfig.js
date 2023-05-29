@@ -21,6 +21,16 @@ const validateRegister = celebrate({
   }),
 });
 
+const validateUpdatedUserData = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    name: Joi.string().min(2).max(30).required(),
+  }),
+});
+
 module.exports = {
-  validateUserId, validateLogin, validateRegister,
+  validateUserId,
+  validateLogin,
+  validateRegister,
+  validateUpdatedUserData,
 };
