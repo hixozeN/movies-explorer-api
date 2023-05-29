@@ -2,27 +2,37 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const helmet = require('helmet');
 const { errors } = require('celebrate');
+
+const { requsetLogger, errorLogger } = require('./middlewares/logger');
 const responseHandler = require('./middlewares/responseHandler');
 
 const router = require('./routes');
-const { MONGO, PORT } = require('./utils/config');
+const {
+  MONGO,
+  PORT,
+  LIMITER,
+  MONGO_OPTIONS,
+} = require('./utils/config');
 
 const app = express();
 app.use(cors());
-
-mongoose.set('strictQuery', false);
-mongoose.connect(MONGO, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  autoIndex: true,
-});
-
 app.use(express.json());
 
-app.use(router);
+mongoose.set('strictQuery', false);
+mongoose.connect(MONGO, MONGO_OPTIONS);
 
+// защита
+app.use(LIMITER);
+app.use(helmet());
+// логи реквестов
+app.use(requsetLogger);
+// маршруты
+app.use(router);
+// логи ошибок
+app.use(errorLogger);
+// обработка ошибок
 app.use(errors());
 app.use(responseHandler);
 
