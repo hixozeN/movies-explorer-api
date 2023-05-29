@@ -5,7 +5,7 @@ const NotFound = require('../utils/responsesWithError/NotFound');
 const { validateLogin, validateRegister } = require('../utils/validationConfig');
 
 router.use('/users', auth, require('./userRouter'));
-// router.use('/movies', auth, require('./movieRouter'));
+router.use('/movies', auth, require('./movieRouter'));
 
 router.use('/signin', validateLogin, login);
 router.use('/signup', validateRegister, createUser);

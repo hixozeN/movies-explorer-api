@@ -1,7 +1,7 @@
 const movieRouter = require('express').Router();
-const { getMovie, createMovie, deleteMovie } = require('../controllers/movies');
+const { getSavedMovies, createMovie, deleteMovie } = require('../controllers/movies');
 
-movieRouter.get('/', getMovie);
+movieRouter.get('/', getSavedMovies);
 movieRouter.post('/', createMovie);
 movieRouter.delete('/:movieId', deleteMovie);
 
