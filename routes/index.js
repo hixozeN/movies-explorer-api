@@ -10,6 +10,6 @@ router.use('/movies', auth, require('./movieRouter'));
 router.use('/signin', validateLogin, login);
 router.use('/signup', validateRegister, createUser);
 
-router.use('*', (req, res, next) => next(new NotFound('Указанный эндпоинт не найден.')));
+router.use('*', auth, (req, res, next) => next(new NotFound('Указанный эндпоинт не найден.')));
 
 module.exports = router;
