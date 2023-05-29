@@ -1,68 +1,73 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
 
-const movieSchema = new Schema({
-  country: {
-    type: String,
-    required: true,
-  },
-  director: {
-    type: String,
-    required: true,
-  },
-  duration: {
-    type: Number,
-    required: true,
-  },
-  year: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Некорректный URL',
+const movieSchema = new Schema(
+  {
+    country: {
+      type: String,
+      required: true,
     },
-    required: true,
-  },
-  trailerLink: {
-    type: String,
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Некорректный URL',
+    director: {
+      type: String,
+      required: true,
     },
-    required: true,
-  },
-  thumbnail: {
-    type: String,
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Некорректный URL',
+    duration: {
+      type: Number,
+      required: true,
     },
-    required: true,
+    year: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      validate: {
+        validator: (v) => validator.isURL(v),
+        message: 'Некорректный URL',
+      },
+      required: true,
+    },
+    trailerLink: {
+      type: String,
+      validate: {
+        validator: (v) => validator.isURL(v),
+        message: 'Некорректный URL',
+      },
+      required: true,
+    },
+    thumbnail: {
+      type: String,
+      validate: {
+        validator: (v) => validator.isURL(v),
+        message: 'Некорректный URL',
+      },
+      required: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'user',
+    },
+    movieId: {
+      type: Number,
+      required: true,
+    },
+    nameRU: {
+      type: String,
+      required: true,
+    },
+    nameEN: {
+      type: String,
+      required: true,
+    },
   },
-  owner: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'user',
+  {
+    versionKey: false,
   },
-  movieId: {
-    type: Number,
-    required: true,
-  },
-  nameRU: {
-    type: String,
-    required: true,
-  },
-  nameEN: {
-    type: String,
-    required: true,
-  },
-});
+);
 
 module.exports = model('movie', movieSchema);
