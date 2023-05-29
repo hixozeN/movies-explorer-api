@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 const validator = require('validator');
 const bcryptjs = require('bcryptjs');
 const Unauthorized = require('../utils/responsesWithError/Unauthorized');
+const { LOGIN_ERROR, VALIDATION_EMAIL_ERROR } = require('../utils/globalVariables');
 
 const userSchema = new Schema(
   {
@@ -9,7 +10,7 @@ const userSchema = new Schema(
       type: String,
       validate: {
         validator: (v) => validator.isEmail(v),
-        message: 'Некорректный email',
+        message: VALIDATION_EMAIL_ERROR,
       },
       required: true,
       unique: true,
@@ -22,8 +23,8 @@ const userSchema = new Schema(
     name: {
       type: String,
       required: true,
-      minlength: [2, 'Минимальная длина поля "name" - 2'],
-      maxlength: [30, 'Максимальная длина поля "name" - 30'],
+      minlength: 2,
+      maxlength: 30,
     },
   },
   {
@@ -35,9 +36,9 @@ userSchema.statics.findUserByCredentials = function checkPasswordOnLogin(email, 
   return this.findOne({ email })
     .select('+password')
     .then((user) => {
-      if (!user) return Promise.reject(new Unauthorized('Неправильная почта или пароль'));
+      if (!user) return Promise.reject(new Unauthorized(LOGIN_ERROR));
       return bcryptjs.compare(password, user.password).then((matched) => {
-        if (!matched) return Promise.reject(new Unauthorized('Неправильная почта или пароль'));
+        if (!matched) return Promise.reject(new Unauthorized(LOGIN_ERROR));
         return user;
       });
     });

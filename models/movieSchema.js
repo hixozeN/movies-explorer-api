@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
+const { VALIDATION_URL_ERROR } = require('../utils/globalVariables');
 
 const movieSchema = new Schema(
   {
@@ -27,7 +28,7 @@ const movieSchema = new Schema(
       type: String,
       validate: {
         validator: (v) => validator.isURL(v),
-        message: 'Некорректный URL',
+        message: VALIDATION_URL_ERROR,
       },
       required: true,
     },
@@ -35,7 +36,7 @@ const movieSchema = new Schema(
       type: String,
       validate: {
         validator: (v) => validator.isURL(v),
-        message: 'Некорректный URL',
+        message: VALIDATION_URL_ERROR,
       },
       required: true,
     },
@@ -43,7 +44,7 @@ const movieSchema = new Schema(
       type: String,
       validate: {
         validator: (v) => validator.isURL(v),
-        message: 'Некорректный URL',
+        message: VALIDATION_URL_ERROR,
       },
       required: true,
     },
