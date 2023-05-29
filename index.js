@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 
-const { requsetLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const responseHandler = require('./middlewares/responseHandler');
 
 const router = require('./routes');
@@ -27,7 +27,7 @@ mongoose.connect(MONGO, MONGO_OPTIONS);
 app.use(LIMITER);
 app.use(helmet());
 // логи реквестов
-app.use(requsetLogger);
+app.use(requestLogger);
 // маршруты
 app.use(router);
 // логи ошибок
