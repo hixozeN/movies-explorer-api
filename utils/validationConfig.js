@@ -1,10 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 
-const validateUserId = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().hex().length(24).required(),
-  }),
-});
+const regexp = /(http:\/\/(?:www.|(?!www))[A-z0-9-]+\.[^\s]+)|(https:\/\/(?:www.|(?!www))[A-z0-9-]+\.[^\s]+)/;
 
 const validateLogin = celebrate({
   body: Joi.object().keys({
@@ -28,9 +24,32 @@ const validateUpdatedUserData = celebrate({
   }),
 });
 
+const validateMovieId = celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.string().hex().length(24).required(),
+  }),
+});
+
+const validateNewMovie = celebrate({
+  body: Joi.object().keys({
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().length(4).required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().pattern(regexp),
+    trailerLink: Joi.string().required().pattern(regexp),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    thumbnail: Joi.string().required().pattern(regexp),
+    movieId: Joi.number().required(),
+  }),
+});
+
 module.exports = {
-  validateUserId,
   validateLogin,
   validateRegister,
   validateUpdatedUserData,
+  validateMovieId,
+  validateNewMovie,
 };
