@@ -56,6 +56,8 @@ const updateCurrentUser = (req, res, next) => {
     .catch((err) => {
       if (err instanceof ValidationError) {
         next(new BadRequest(err.message));
+      } else if (err.code === 11000) {
+        next(new Dublicate(DUBLICATED_USER_ERROR));
       } else {
         next(err);
       }
