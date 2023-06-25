@@ -19,6 +19,9 @@ const LIMITER = rateLimit({
 const prodOrigins = [
   'https://diploma.hixozen.ru',
   'http://diploma.hixozen.ru',
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:3002',
 ];
 
 const devOrigins = [

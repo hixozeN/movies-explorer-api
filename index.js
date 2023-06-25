@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+const cors = require('cors');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const responseHandler = require('./middlewares/responseHandler');
@@ -17,7 +17,7 @@ const {
 } = require('./utils/config');
 
 const app = express();
-app.use(cors);
+app.use(cors());
 app.use(express.json());
 
 mongoose.set('strictQuery', false);
